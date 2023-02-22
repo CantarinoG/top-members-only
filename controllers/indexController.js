@@ -4,7 +4,18 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 
 exports.mainGet = (req, res, next) => {
-    res.send('mainGet');
+    Message.find({})
+    .sort({timestamp: -1})
+    .populate("user")
+    .exec(
+        function (err, messages) {
+            if (err) return next(err);
+            res.render("index", {
+                user: res.locals.currentUser,
+                messages: messages 
+            });
+        }
+    );
   }
 
 exports.loginGet = (req, res, next) => {

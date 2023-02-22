@@ -3,11 +3,7 @@ var router = express.Router();
 
 const indexController = require('../controllers/indexController');
 
-router.get('/', (req, res, next) => {
-    res.render("index", {
-        user: res.locals.currentUser
-    })
-});
+router.get('/', indexController.mainGet);
 
 router.get('/login', indexController.loginGet);
 router.get('/signup', indexController.signupGet);

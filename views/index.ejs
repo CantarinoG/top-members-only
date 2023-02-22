@@ -16,22 +16,63 @@
 
 <body>
 
-    <header>
-        <nav class="logo">
-          <a href="#">SECRECY</a>
-        </nav>
-        <nav>
-                <a href="#">SIGN UP</a>
-                <a href="#">LOG IN</a>
-        </nav>
-    </header>
+  <% if (user) {%>
 
-    <% if (user) {%>
-      <h1>WELCOME BACK <%= user.username %></h1>
-      <form action="/logout" method="POST">
-        <button type="submit">Log out</button>
-      </form>
-    <% } %>
+    <header>
+      <nav class="logo">
+        <a href="#">SECRECY</a>
+        <span><%= user.username %></span>
+        <span>
+          <form action="/logout" method="POST">
+          <button type="submit">Log out</button>
+          </form>
+        </span>
+      </nav>
+      <nav>
+              <a href="#">NEW MESSAGE</a>
+              <a href="#">MEMBER STATUS</a>
+      </nav>
+  </header>
+
+  <% } else { %>
+
+    <header>
+      <nav class="logo">
+        <a href="#">SECRECY</a>
+      </nav>
+      <nav>
+              <a href="#">SIGN UP</a>
+              <a href="#">LOG IN</a>
+      </nav>
+  </header>
+
+  <% } %>
+    
+    <ul>
+
+      <% if (typeof messages != "undefined") { %>
+        <% messages.forEach((message) => { %>
+            <li>
+                <span><%= message.title %></span>
+                <span><%= message.content %></span>
+
+                <% if(user && (user.status == "Admin" || user.status == "Member")) { %>
+                  <span><%= message.user.fullname %></span>
+                <% } else { %>
+                  <span>Anonymous</span>
+                <% } %>
+
+                <% if (user) { %>
+                  <span><%= message.timestamp %></span>
+                <% } %>
+
+            </li>
+        <% }) %>
+      <% } else { %>
+          <li>No messages.</li>
+      <% } %>
+
+    </ul>
 
 </body>
 </html>
