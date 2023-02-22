@@ -28,7 +28,19 @@
 
     <% if (user) {%>
       <p>You are already logged in.</p>
-    <% } else { %>
+    <% } else if( typeof currentData != "undefined"){ %>
+      <form action="" method="POST">
+        <label for="fullname">Fullname</label>
+        <input type="text" name="fullname" id="fullname" value="<%= currentData.fullname %>"/>
+        <label for="username">Username</label>
+        <input name="username" type="text" id="username" value="<%= currentData.username %>"/>
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password" />
+        <label for="confirm">Confirm Password</label>
+        <input name="confirm" type="password" id="confirm" />
+        <button>Sign Up</button>
+      </form>
+    <% } else { %>  
       <form action="" method="POST">
         <label for="fullname">Fullname</label>
         <input type="text" name="fullname" id="fullname"/>
@@ -36,9 +48,23 @@
         <input name="username" type="text" id="username" />
         <label for="password">Password</label>
         <input name="password" type="password" id="password" />
+        <label for="confirm">Confirm Password</label>
+        <input name="confirm" type="password" id="confirm" />
         <button>Sign Up</button>
       </form>
-    <% } %>  
+    <% } %>
+
+    <% if(typeof errors != "undefined"){ %>
+      <ul>
+          <% if (errors.length) { %>
+              <% errors.forEach((error) => { %>
+                  <li>
+                     <%= error %>
+                  </li>
+              <% }) %>
+          <% } %>
+      </ul>
+    <% } %>
 
 </body>
 </html>

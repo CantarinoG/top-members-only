@@ -55,19 +55,58 @@ exports.loginPost = passport.authenticate("local", {
 )
 
 exports.signupPost = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-        if (err) return next(err);
-        const user = new User({
-            username: req.body.username,
-            password: hashedPassword,
-            fullname: "Default"
-        }).save(err => {
-            if(err) {
-                return next(err);
-            }
-            res.redirect("/");
+    const fullname = req.body.fullname.trim();
+    const username = req.body.username.trim();
+    const password = req.body.password.trim();
+    const confirm = req.body.confirm.trim();
+
+    const errors = [];
+
+    if (!fullname) {
+        errors.push("Full name is required.");
+    }
+    if (fullname.length < 3) {
+        errors.push("Full name must be at least 3 characters");
+    }
+    if (!username) {
+        errors.push("Username is required.");
+    }
+    if (username.length < 3) {
+        errors.push("Username must be at least 3 characters");
+    }
+    if (!password || !confirm) {
+        errors.push("Password is required.");
+    }
+    if (password != confirm) {
+        errors.push("Passwords do not match.")
+    }
+
+    if(errors.length) {
+        const currentData = {
+            fullname: fullname,
+            username: username
+        }
+        res.render("signup", {
+            user: res.locals.currentUser,
+            errors: errors,
+            currentData: currentData
         });
-      });
+        return;
+    } else {
+        bcrypt.hash(password, 10, (err, hashedPassword) => {
+            if (err) return next(err);
+            const user = new User({
+                fullname: fullname,
+                username: username,
+                password: hashedPassword
+            }).save(err => {
+                if(err) {
+                    return next(err);
+                }
+                res.redirect("/login");
+            });
+          });
+    }
 }
 
 exports.newmessagePost = (req, res, next) => {
