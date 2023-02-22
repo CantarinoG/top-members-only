@@ -20,8 +20,10 @@ exports.mainGet = (req, res, next) => {
 
 exports.loginGet = (req, res, next) => {
     if (res.locals.currentUser) return res.redirect("/");
+    let alert = req.query.success;
     res.render("login", {
-        user: res.locals.currentUser
+        user: res.locals.currentUser,
+        alert: alert
     });
 }
 
@@ -48,8 +50,9 @@ exports.memberstatusGet = (req, res, next) => {
 
 exports.loginPost = passport.authenticate("local", {
         successRedirect: "/",
-        failureRedirect: "/"
-      })
+        failureRedirect: "/login?success=false"
+      }
+)
 
 exports.signupPost = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
