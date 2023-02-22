@@ -20,19 +20,30 @@ exports.mainGet = (req, res, next) => {
 
 exports.loginGet = (req, res, next) => {
     if (res.locals.currentUser) return res.redirect("/");
-    res.render("login");
+    res.render("login", {
+        user: res.locals.currentUser
+    });
 }
 
 exports.signupGet = (req, res, next) => {
-    res.render("signup");
+    if (res.locals.currentUser) return res.redirect("/");
+    res.render("signup", {
+        user: res.locals.currentUser
+    });
 }
 
 exports.newmessageGet = (req, res, next) => {
-    res.send('newMessageGet');
+    if (!res.locals.currentUser) return res.redirect("/");
+    res.render('newmessage', {
+        user: res.locals.currentUser
+    });
 }
 
 exports.memberstatusGet = (req, res, next) => {
-    res.send('memberStatusGet');
+    if (!res.locals.currentUser) return res.redirect("/");
+    res.render('memberstatus', {
+        user: res.locals.currentUser
+    });
 }
 
 exports.loginPost = passport.authenticate("local", {

@@ -26,14 +26,19 @@
         </nav>
     </header>
 
-    <h1>Sign Up</h1>
-  <form action="" method="POST">
-    <label for="username">Username</label>
-    <input name="username" placeholder="username" type="text" />
-    <label for="password">Password</label>
-    <input name="password" type="password" />
-    <button>Sign Up</button>
-  </form>
+    <% if (user) {%>
+      <p>You are already logged in.</p>
+    <% } else { %>
+      <form action="" method="POST">
+        <label for="fullname">Fullname</label>
+        <input type="text" name="fullname" id="fullname"/>
+        <label for="username">Username</label>
+        <input name="username" type="text" id="username" />
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password" />
+        <button>Sign Up</button>
+      </form>
+    <% } %>  
 
 </body>
 </html>

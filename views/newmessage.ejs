@@ -26,5 +26,17 @@
         </nav>
     </header>
 
+    <% if (!user) {%>
+      <p>You must be logged in.</p>
+    <% } else { %>
+      <form action="" method="POST">
+        <label for="title">Title</label>
+        <input name="title" placeholder="title" id="title" type="text" />
+        <label for="content">Content</label>
+        <input name="content" type="text" id="content" />
+        <button>Post</button>
+      </form>
+    <% } %>
+
 </body>
 </html>

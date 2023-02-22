@@ -26,5 +26,15 @@
         </nav>
     </header>
 
+    <% if (!user) {%>
+      <p>You must be logged in.</p>
+    <% } else { %>
+      <form action="" method="POST">
+        <label for="password">Type in the secret password to become member or admin:</label>
+        <input name="password" type="password" id="password" />
+        <button>Post</button>
+      </form>
+    <% } %>
+
 </body>
 </html>
