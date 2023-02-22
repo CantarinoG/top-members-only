@@ -17,4 +17,10 @@ router.get('/memberstatus', function(req, res, next) {
   res.send('memberstatus');
 });
 
+router.post('/login', function(req, res, next) {return});
+router.post('/signup', function(req, res, next) {return});
+router.post('/newmessage', function(req, res, next) {return});
+router.post('/memberstatus', function(req, res, next) {return});
+
+
 module.exports = router;
