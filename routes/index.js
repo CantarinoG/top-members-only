@@ -1,26 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.send('main');
-});
-router.get('/login', function(req, res, next) {
-  res.send('logIn');
-});
-router.get('/signup', function(req, res, next){
-  res.send('signup');
-});
-router.get('/newmessage', function(req, res, next) {
-  res.send('newmessage');
-});
-router.get('/memberstatus', function(req, res, next) {
-  res.send('memberstatus');
-});
+const indexController = require('../controllers/indexController');
 
-router.post('/login', function(req, res, next) {return});
-router.post('/signup', function(req, res, next) {return});
-router.post('/newmessage', function(req, res, next) {return});
-router.post('/memberstatus', function(req, res, next) {return});
+router.get('/', indexController.mainGet);
+router.get('/login', indexController.loginGet);
+router.get('/signup', indexController.signupGet);
+router.get('/newmessage', indexController.newmessageGet);
+router.get('/memberstatus', indexController.memberstatusGet);
 
+router.post('/login', indexController.loginPost);
+router.post('/signup', indexController.signupPost);
+router.post('/newmessage', indexController.newmessagePost);
+router.post('/memberstatus', indexController.memberstatusPost);
 
 module.exports = router;
