@@ -1,0 +1,21 @@
+body {
+    font-family: var(--raleway);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    min-height: 100vh;
+}
+
+.stack {
+    text-align: left;
+    width: 100%;
+    word-wrap:break-word;
+}
+
+h1, h2 {
+    letter-spacing: 4px;
+}

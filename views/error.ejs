@@ -1,3 +1,61 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Secrecy | Error </title>
+
+    <link rel="icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" href="favicon/logo192.png" />
+
+    <link rel='stylesheet' href='/stylesheets/index.css'/>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/error.css' />
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta
+      name="description"
+      content="An exclusive clubhouse where members can write anonymous posts and only authenticated members can see the post's author."
+    />
+
+</head>
+
+<body>
+
+    <% if (user) {%>
+
+        <header>
+          <nav>
+            <a class="logo" href="/">SECRECY</a>
+            <div>
+              <form action="/logout" method="POST">
+              <button type="submit">LOG OUT</button>
+              </form>
+            </div>
+          </nav>
+          <nav>
+                  <a href="/newmessage">NEW MESSAGE</a>
+                  <a href="/memberstatus">MEMBER STATUS</a>
+          </nav>
+      </header>
+    
+      <% } else { %>
+    
+        <header>
+          <nav>
+            <a class="logo" href="/">SECRECY</a>
+          </nav>
+          <nav>
+                  <a href="/signup">SIGN UP</a>
+                  <a href="/login">LOG IN</a>
+          </nav>
+      </header>
+    
+      <% } %>
+
+    <h1><%= message.toUpperCase() %></h1>
+    <h2><%= error.status %></h2>
+    <p>You were not supposed to be here. Please check the URL.</p>
+    <p class="stack"><%= error.stack %></p>
+    
+</body>
+</html>

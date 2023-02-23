@@ -12,6 +12,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
+const { resolve } = require('path');
 
 var app = express();
 
@@ -71,7 +72,9 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    user: res.locals.currentUser
+  });
 });
 
 module.exports = app;
