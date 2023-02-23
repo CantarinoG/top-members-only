@@ -48,3 +48,7 @@ input {
     background-color: white;
     color: #202e43;
 }
+
+ul {
+    list-style-type: none;
+}
