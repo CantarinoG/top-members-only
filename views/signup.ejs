@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <title> Secrecy | Sign Up </title>
 
     <link rel="icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="favicon/logo192.png" />
+
+    <link rel='stylesheet' href='/stylesheets/index.css'/>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/signup.css' />
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta
@@ -16,20 +21,41 @@
 
 <body>
 
+  <% if (user) {%>
+
     <header>
-        <nav class="logo">
-          <a href="#">SECRECY</a>
-        </nav>
-        <nav>
-                <a href="#">SIGN UP</a>
-                <a href="#">LOG IN</a>
-        </nav>
-    </header>
+      <nav>
+        <a class="logo" href="/">SECRECY</a>
+        <div>
+          <form action="/logout" method="POST">
+          <button type="submit">LOG OUT</button>
+          </form>
+        </div>
+      </nav>
+      <nav>
+              <a href="/newmessage">NEW MESSAGE</a>
+              <a href="/memberstatus">MEMBER STATUS</a>
+      </nav>
+  </header>
+
+  <% } else { %>
+
+    <header>
+      <nav>
+        <a class="logo" href="/">SECRECY</a>
+      </nav>
+      <nav>
+              <a href="/signup">SIGN UP</a>
+              <a href="/login">LOG IN</a>
+      </nav>
+  </header>
+
+  <% } %>
 
     <% if (user) {%>
       <p>You are already logged in.</p>
     <% } else if( typeof currentData != "undefined"){ %>
-      <form action="" method="POST">
+      <form class="theform" action="" method="POST">
         <label for="fullname">Fullname</label>
         <input type="text" name="fullname" id="fullname" value="<%= currentData.fullname %>"/>
         <label for="username">Username</label>
@@ -41,7 +67,7 @@
         <button>Sign Up</button>
       </form>
     <% } else { %>  
-      <form action="" method="POST">
+      <form class="theform" action="" method="POST">
         <label for="fullname">Fullname</label>
         <input type="text" name="fullname" id="fullname"/>
         <label for="username">Username</label>
