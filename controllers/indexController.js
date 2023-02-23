@@ -2,6 +2,8 @@ const User = require('../models/user.js');
 const Message = require('../models/message.js');
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const user = require('../models/user.js');
+require('dotenv').config();
 
 exports.mainGet = (req, res, next) => {
     Message.find({})
@@ -154,11 +156,37 @@ exports.newmessagePost = (req, res, next) => {
             res.redirect("/");
         });
     }
-
 }
 
 exports.memberstatusPost = (req, res, next) => {
-    res.send('memberStatusPost');
+    const password = req.body.password.trim();
+
+    const errors = [];
+
+    if(res.locals.currentUser.status == "Member" || res.locals.currentUser.status == "Admin") {
+        errors.push("You are already a member.");
+    } else if (password != process.env.MEMBER_PASS) {
+        errors.push("Wrong password. You did not become a member.");
+    }
+    
+    if(errors.length) {
+        res.render("memberstatus", {
+            user: res.locals.currentUser,
+            errors: errors
+        });
+        return;
+    } else {
+        User.findByIdAndUpdate(res.locals.currentUser._id, {
+            fullname: res.locals.currentUser.fullname,
+            username: res.locals.currentUser.username,
+            password: res.locals.currentUser.password,
+            status: "Member"
+        }, {}, (err, updatedUser) => {
+            if(err) return next(err);
+            res.redirect("/");
+        });
+    }
+
 }
 
 exports.logoutPost = (req, res, next) => {
