@@ -10,6 +10,7 @@
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/home.css' />
 
+    <script src="/scripts/pagination.js" defer></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta
@@ -52,7 +53,7 @@
 
   <% } %>
     
-    <ul>
+    <ul id="paginated-list">
 
       <%if (!user) {%>
         <li>
@@ -89,6 +90,19 @@
       <% } %>
 
     </ul>
+
+    <nav class="pagination-container">
+      <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
+        &lt;
+      </button>
+      
+      <div id="pagination-numbers">
+      </div>
+      
+      <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
+        &gt;
+      </button>
+    </nav>
 
 </body>
 </html>
