@@ -27,8 +27,21 @@
     </header>
 
     <% if (!user) {%>
+
       <p>You must be logged in.</p>
+
+    <% } else if( typeof currentData != "undefined") { %>
+
+      <form action="" method="POST">
+        <label for="title">Title</label>
+        <input name="title" placeholder="title" id="title" type="text" value="<%= currentData.title %>" />
+        <label for="content">Content</label>
+        <input name="content" type="text" id="content" value="<%= currentData.content %>" />
+        <button>Post</button>
+      </form>
+
     <% } else { %>
+
       <form action="" method="POST">
         <label for="title">Title</label>
         <input name="title" placeholder="title" id="title" type="text" />
@@ -36,6 +49,19 @@
         <input name="content" type="text" id="content" />
         <button>Post</button>
       </form>
+
+    <% } %>
+
+    <% if(typeof errors != "undefined"){ %>
+      <ul>
+          <% if (errors.length) { %>
+              <% errors.forEach((error) => { %>
+                  <li>
+                     <%= error %>
+                  </li>
+              <% }) %>
+          <% } %>
+      </ul>
     <% } %>
 
 </body>

@@ -66,13 +66,13 @@ exports.signupPost = (req, res, next) => {
         errors.push("Full name is required.");
     }
     if (fullname.length < 3) {
-        errors.push("Full name must be at least 3 characters");
+        errors.push("Full name must be at least 3 characters.");
     }
     if (!username) {
         errors.push("Username is required.");
     }
     if (username.length < 3) {
-        errors.push("Username must be at least 3 characters");
+        errors.push("Username must be at least 3 characters.");
     }
     if (!password || !confirm) {
         errors.push("Password is required.");
@@ -98,7 +98,7 @@ exports.signupPost = (req, res, next) => {
             const user = new User({
                 fullname: fullname,
                 username: username,
-                password: hashedPassword
+                password: hashedPassword,
             }).save(err => {
                 if(err) {
                     return next(err);
@@ -110,7 +110,41 @@ exports.signupPost = (req, res, next) => {
 }
 
 exports.newmessagePost = (req, res, next) => {
-    res.send('newmessagePost');
+    const title = req.body.title.trim();
+    const content = req.body.content.trim();
+
+    const errors = [];
+
+    if(!title) {
+        errors.push("Title is required.");
+    }
+    if(!content) {
+        errors.push("Content is required.");
+    }
+    if(errors.length) {
+        const currentData = {
+            title: title,
+            content: content
+        }
+        res.render("newmessage", {
+            user: res.locals.currentUser,
+            errors: errors,
+            currentData: currentData
+        });
+        return;
+    } else {
+        const message = new Message({
+            title: title,
+            content: content,
+            user: res.locals.currentUser._id
+        }).save(err => {
+            if(err) {
+                return next(err);
+            }
+            res.redirect("/");
+        });
+    }
+
 }
 
 exports.memberstatusPost = (req, res, next) => {
