@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+:root {
+    --raleway: 'Raleway', sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background: #051937;
+    background-image: radial-gradient(circle, #051937, #102039, #1a273a, #252e3a, #30353b);
+    background-attachment: fixed; 
+    padding: calc(80px + 4%) 4% 4% 4%;
+}
+
+@media only screen and (min-width: 425px) {
+
+  body {
+    padding: calc(60px + 4%) 4% 4% 4%;
+  }
+
+}

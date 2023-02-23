@@ -6,6 +6,11 @@
     <link rel="icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="favicon/logo192.png" />
 
+    <link rel='stylesheet' href='/stylesheets/index.css'/>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/home.css' />
+
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta
       name="description"
@@ -19,30 +24,29 @@
   <% if (user) {%>
 
     <header>
-      <nav class="logo">
-        <a href="#">SECRECY</a>
-        <span><%= user.username %></span>
-        <span>
+      <nav>
+        <a class="logo" href="#">SECRECY</a>
+        <div>
           <form action="/logout" method="POST">
-          <button type="submit">Log out</button>
+          <button type="submit">LOG OUT</button>
           </form>
-        </span>
+        </div>
       </nav>
       <nav>
-              <a href="#">NEW MESSAGE</a>
-              <a href="#">MEMBER STATUS</a>
+              <a href="/newmessage">NEW MESSAGE</a>
+              <a href="/memberstatus">MEMBER STATUS</a>
       </nav>
   </header>
 
   <% } else { %>
 
     <header>
-      <nav class="logo">
-        <a href="#">SECRECY</a>
+      <nav>
+        <a class="logo" href="/">SECRECY</a>
       </nav>
       <nav>
-              <a href="#">SIGN UP</a>
-              <a href="#">LOG IN</a>
+              <a href="/signup">SIGN UP</a>
+              <a href="/login">LOG IN</a>
       </nav>
   </header>
 
@@ -50,26 +54,38 @@
     
     <ul>
 
+      <%if (!user) {%>
+        <li>
+          <p>You must be logged in to create your own messages and see when each message was posted.</p>
+        </li>
+      <% } else if (user.status == "Default") {%>
+        <li>
+          <p>You must become a member to be able to see post's authors.</p>
+        </li>
+      <% } %>
+
       <% if (typeof messages != "undefined") { %>
         <% messages.forEach((message) => { %>
             <li>
-                <span><%= message.title %></span>
-                <span><%= message.content %></span>
+                <h2><%= message.title %></h2>
+                <p><%= message.content %></p>
 
                 <% if(user && (user.status == "Admin" || user.status == "Member")) { %>
-                  <span><%= message.user.fullname %></span>
+                  <span class="fullname"><%= message.user.fullname %></span>
                 <% } else { %>
-                  <span>Anonymous</span>
+                  <span class="fullname">-Anonymous</span>
                 <% } %>
 
                 <% if (user) { %>
-                  <span><%= message.timestamp %></span>
+                  <span class="timestamp"><%= message.timestamp_formatted %></span>
                 <% } %>
 
             </li>
         <% }) %>
       <% } else { %>
-          <li>No messages.</li>
+          <li>
+            <p>No messages.</p>
+          </li>
       <% } %>
 
     </ul>
